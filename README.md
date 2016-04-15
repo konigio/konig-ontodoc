@@ -11,17 +11,31 @@ ontology.
 
 ## Customization
 
-If you want to display documentation for your own ontology, you'll need to edit the 
-file `/dist/js/konig-ontodoc-services.js`.
+There are two ways to display your own ontology in Ontodoc.  You can either
+supply the URL to your ontology as the `src` query parameter, or you can edit
+the `ontodoc.html` file to embed your ontology as a JSON object.
 
-In that file, change the method 
+With the first approach, simply open ontodoc in your browser using a URL of the following form:
+
 ```
-	StaticOntologyService.prototype.getOntologyGraph
+	{baseURI}/ontodoc.html?src={your-ontology-url}
 ```
-so that it returns a JSON-LD representation of your ontology.  The JSON-LD `@graph` may 
-contain multiple ontologies.
+
+For the second approach, open the `ontodoc.html` file in a text editor. At the bottom of the
+file, you will find the following script.
+
+```javascript
+var defaultGraph = {...};
+			
+var ontologyService = new konig.AjaxOntologyService(defaultGraph);
+konig.buildOntodoc(ontologyService);
+
+});
+```
+
+Replace the value of `defaultGraph`	with a JSON-LD representation of your ontology.
 
 If your ontologies are in some other format (such as Turtle or RDF/XML), you can
-use [EasyRDF](http://www.easyrdf.org/converter) to convert them to JSON format.
+use [EasyRDF](http://www.easyrdf.org/converter) to convert them to JSON-LD format.
 
 
